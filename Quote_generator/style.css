@@ -1,0 +1,170 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: left;
+}
+
+#imgbg {
+    width: 100%;
+    position: absolute;
+    z-index: 0;
+}
+
+#bgquote {
+    position: relative;
+    top: 30px;
+    left: 90px;
+    background: rgba(255, 255, 255, 0.89);
+    width: 700px;
+    height:fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 1;
+    box-shadow: 0px -4px 38px -4px rgba(0,0,0,0.75);
+    border-radius: 40px;
+    padding-bottom: 50px;
+}
+
+#imgquote
+{
+    width: 100px;
+    height: 100px;
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 30px;
+}
+
+#quote
+{
+    margin-top: 0;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-bottom: 50px;
+}
+
+#author
+{
+    margin-bottom: 70px;
+    margin-left: 430px;
+    margin-right: 40px;
+}
+
+#generate
+{
+    width: 260px;
+    margin-left: 32%;
+    background: transparent;
+    font-size: 24px;
+    padding: 20px;
+    border: 2px grey solid;
+    border-radius: 40px;
+    transition: all 0.3s ease;
+}
+
+#generate:hover
+{
+    background: rgba(255, 255, 255, 0.76);
+    box-shadow: -2px 7px 24px -4px rgba(0,0,0,0.47);
+
+}
+
+#generate:active { 
+    box-shadow: -2px 15px 47px -4px rgba(0,0,0,0.53);
+}
+
+#generate:focus { 
+    outline: none;
+}
+
+
+
+label {
+    /* Presentation */
+    font-size: 70px;
+    margin-right: 20px;
+    margin-top: 5px;
+  }
+  
+  /* Required Styling */
+  
+  label input[type="checkbox"] {
+    display: none;
+  }
+  
+  .custom-checkbox {
+    margin-left: 2em;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .custom-checkbox .glyphicon {
+    color: gold;
+    position: absolute;
+    top: 0.4em;
+    left: -1.25em;
+    font-size: 0.75em;
+  }
+  
+  .custom-checkbox .glyphicon-star-empty {
+    color: gray;
+  }
+  
+  .custom-checkbox .glyphicon-star {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .custom-checkbox:hover .glyphicon-star{
+    opacity: 0.5;
+  }
+  
+  .custom-checkbox input[type="checkbox"]:checked ~ .glyphicon-star {
+    opacity: 1;
+  }
+
+  #entete
+  {
+      display: flex;
+      justify-content: space-between;
+  }
+
+  .hidden
+  {
+      visibility: hidden;
+  }
+
+
+
+  #favorites
+  {
+    position: relative;
+    width: 250px;
+    max-height: 55px;
+    background: white;
+    top: 30px;
+    right: 30px;
+    text-align: center;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+    box-shadow: 0px -4px 38px -4px rgba(0,0,0,0.75);
+    overflow: hidden;
+    transition: max-height 1s;
+    
+  }
+
+  #favorites:hover
+  {
+    max-height: 92%;
+    overflow-y: auto;
+    transition: max-height 2s;
+
+  }
