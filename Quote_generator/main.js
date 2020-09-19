@@ -1,42 +1,45 @@
+let favContainer = document.getElementById("favorites");
 let quotereq = document.getElementById(`quote`);
 let authorreq = document.getElementById(`author`);
 let fav = document.querySelector("input");
 let fav2 = document.querySelector("label");
 let stockage = localStorage;
-let isGenerate = false;
-let favInsert = document.querySelector("#favinsert");
+let whatDelete = document.querySelector("#favinsert");
+let buttonDeleteFavs = document.querySelector("#deleteAllFavs");
 
 
 var quote;
 var author;
 
-var quotes = [];
-var authors = [];
+let quotes;
+let authors;
 
 
+//Initialisation 
 
-getFavorites();
-fav2.classList.add("hidden");
-
-
+getFavorites();                                         //Récupère les quotes enregistrées
+fav2.classList.add("hidden");                           //Cache le bouton favori avant le lancement
 
 //Clic sur le bouton Generate
 document.getElementById("generate").addEventListener("click", function() 
 {
     fetch('https://api.quotable.io/random')
         .then(response => response.json())
-        .then(data => {
-            quotereq.innerHTML = data.content;
-            authorreq.innerHTML = data.author;
-            fav2.classList.remove("hidden");
-            quote = data.content;
-            author = data.author;
+        .then(data => 
+        {
+            quotereq.innerHTML = data.content;          //Affiche la quote
+            authorreq.innerHTML = data.author;          //Affiche l'auteur
+            fav2.classList.remove("hidden");            //Affiche le bouton favori
+            quote = data.content;                       //Stocke la quote dans une variable
+            author = data.author;                       //Stocke l'auteur dans une variable
         })
 
         .catch(err => 
         {
             console.log(err);
         });
+        fav.checked=false;                              //Réinitialise le bouton fav à chaque nouvelle quote
+
 });
 
 
@@ -44,35 +47,42 @@ document.getElementById("generate").addEventListener("click", function()
 fav.addEventListener("click",function(){
     if (fav.checked == true)
     {
-        stockage.setItem("quote",quote);
-        stockage.setItem("author",author);
         addFavorite(quote, author);
-    } else
+        buttonDeleteFavs.classList.remove("hidden");
+
+    } else if(fav.checked == false)
     {
-        //stockage.removeItem("quote");
-        //stockage.removeItem("author");
+        whatDelete.removeChild(whatDelete.firstChild);
+        stockage.removeItem("quote");
+        stockage.removeItem("author");
+
+        if(!whatDelete.firstChild)
+        {
+            buttonDeleteFavs.classList.add("hidden");
+        }
+        
     }
+
+})
+
+
+buttonDeleteFavs.addEventListener("click",function(){
+    stockage.clear();
+    
+    while (whatDelete.firstChild) {
+        whatDelete.removeChild(whatDelete.firstChild);
+    }
+    fav.checked=false;
+    buttonDeleteFavs.classList.add("hidden");
 
 })
 
 
 function addFavorite(quote, author)
 {
-    let newDiv = document.createElement("div");
-    let bgColor = convertHex(getRandomColor(),30);
-    newDiv.style.width = "96%";
-    newDiv.style.height = "fit-content";
-    newDiv.style.background = `${bgColor}`;
-    newDiv.style.border = "0.1px solid black";
-    newDiv.style.color = "black";
-    newDiv.style.marginLeft = "auto";
-    newDiv.style.marginRight = "auto";
-    newDiv.style.marginBottom = "10px";
-    newDiv.style.padding = "7px";
-    newDiv.style.fontSize = "15px";
-    newDiv.style.borderRadius = "25px";
-    newDiv.innerHTML = `${quote} </br>~ ${author}`;
-    document.getElementById("favinsert").appendChild(newDiv);
+    createDivFavorite(quote, author);
+    stockage.setItem("quote",quote);
+    stockage.setItem("author",author);
 }
 
 
@@ -107,6 +117,60 @@ function getFavorites()
         let favquote = stockage.getItem("quote");
         let favauthor = stockage.getItem("author");
 
-        addFavorite(favquote,favauthor);        
+        addFavorite(favquote,favauthor);
+        buttonDeleteFavs.classList.remove("hidden");
+
+    } else
+    {
+        buttonDeleteFavs.classList.add("hidden");
     }
 }
+
+function createDivFavorite(quote, author)
+{
+    let newDiv = document.createElement("div");
+    let bgColor = convertHex(getRandomColor(),30);
+    let newButton = document.createElement("button");
+
+    newDiv.style.position = "relative"
+
+    newDiv.style.width = "96%";
+    newDiv.style.height = "fit-content";
+    newDiv.style.background = `${bgColor}`;
+    newDiv.style.border = "0.1px solid black";
+    newDiv.style.color = "black";
+    newDiv.style.marginLeft = "auto";
+    newDiv.style.marginRight = "auto";
+    newDiv.style.marginBottom = "10px";
+    newDiv.style.padding = "7px";
+    newDiv.style.fontSize = "15px";
+    newDiv.style.borderRadius = "25px";
+    newDiv.innerHTML = `</br>${quote} </br>~ ${author}`;
+
+    newButton.innerHTML = "X";
+    newButton.style.position = "absolute"
+    newButton.style.right = "15px";
+    newButton.style.top = "4px";
+    newButton.style.background = "none";
+    newButton.style.border = "none";
+    newButton.style.fontFamily = "Arial";
+
+    
+
+    let position = document.getElementById("favinsert");
+    position.appendChild(newDiv);
+    position.lastChild.appendChild(newButton);
+
+    newButton.addEventListener("click", function()
+    {
+        position.removeChild(newDiv);
+        stockage.removeItem("quote");
+        stockage.removeItem("author");
+
+        if(whatDelete.childElementCount == 0)
+        {
+            buttonDeleteFavs.classList.add("hidden");
+        }
+    });
+}
+

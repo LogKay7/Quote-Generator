@@ -168,3 +168,22 @@ label {
     transition: max-height 2s;
 
   }
+
+  #deleteAllFavs
+  { 
+    position: absolute;
+    right: 20px;
+    top: 7px;
+    background: transparent;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    border: none;
+    color: red;
+    cursor: pointer;
+
+  }
+
+  #deleteAllFavs img
+  {
+    width: 25px;
+  }
